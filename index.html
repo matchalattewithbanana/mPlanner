@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Boards + NEET + CUET plan</title>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f3f5f9;--cd:#fff;--tx:#141b26;--mu:#617085;--bd:#e0e6ee;--ac:#2f6fed;--ok:#22a06b;--a:#e6eefe;--b:#e1f4ea;--n:#fdeed8;--c:#ece6fa;--ex:#fde4e4;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f131a;--cd:#18202b;--tx:#e9eef5;--mu:#93a1b3;--bd:#283241;--ac:#6c9cff;--a:#192b4a;--b:#173226;--n:#3a2a14;--c:#2a2347;--ex:#43201f;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0f131a;--cd:#18202b;--tx:#e9eef5;--mu:#93a1b3;--bd:#283241;--ac:#6c9cff;--a:#192b4a;--b:#173226;--n:#3a2a14;--c:#2a2347;--ex:#43201f;color-scheme:dark}
+*{box-sizing:border-box}html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--tx);font:500 15px/1.5 Manrope,ui-sans-serif,system-ui,sans-serif}
+main{max-width:640px;margin:0 auto;padding:16px 14px 100px}
+.v{display:none}.v.on{display:block}
+h1{font-size:1.3rem;font-weight:800;margin:4px 2px}
+h2{font-size:.74rem;text-transform:uppercase;letter-spacing:.09em;color:var(--mu);margin:22px 4px 8px}
+.mu{color:var(--mu);font-size:.85rem}
+button{font:inherit;color:var(--tx);cursor:pointer}
+button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--ac);outline-offset:2px}
+.hero{background:linear-gradient(135deg,#1b2d60,#2b6cb0 62%,#2aa198);color:#fff;border-radius:26px;padding:20px;display:flex;justify-content:space-between;align-items:center;gap:12px;box-shadow:0 10px 30px rgba(30,70,140,.25)}
+.hero b{display:block;font-size:2.6rem;line-height:1;font-weight:800}.hero small{opacity:.9}
+.chip{display:inline-block;font-size:.65rem;font-weight:800;letter-spacing:.08em;padding:3px 9px;border-radius:99px;background:rgba(255,255,255,.22);margin-bottom:8px}
+.pr{position:relative;flex:0 0 64px;height:64px;border-radius:50%;background:conic-gradient(#7cf0b5 calc(var(--p)*1%),rgba(255,255,255,.22) 0);display:grid;place-items:center}
+.pr:before{content:"";position:absolute;inset:7px;border-radius:50%;background:#20427f}.pr b{position:relative;font-size:.85rem;font-weight:800}
+.nav{display:flex;gap:6px;margin:14px 0 8px}.nav input,.nav button{background:var(--cd);border:1px solid var(--bd);border-radius:12px;padding:8px 12px;min-height:44px;font:inherit;color:var(--tx)}.nav input{flex:1;min-width:0}
+.strip{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin-bottom:10px}
+.strip button{background:var(--cd);border:1px solid var(--bd);border-radius:14px;padding:7px 0;min-height:60px;display:grid;justify-items:center;gap:1px}
+.strip small{font-size:.66rem;color:var(--mu)}.strip i{width:7px;height:7px;border-radius:50%;background:var(--bd)}.strip .ok i{background:var(--ok)}
+.strip .on{background:var(--ac);border-color:var(--ac);color:#fff}.strip .on small{color:#fff}
+.day,.card{background:var(--cd);border:1px solid var(--bd);border-radius:22px;overflow:hidden}.card{padding:14px}
+.dh{padding:14px 16px;font-weight:800;border-bottom:1px solid var(--bd)}.dh small{display:block;color:var(--mu);font-weight:500}
+button.r{display:flex;gap:12px;width:100%;text-align:left;border:0;border-left:5px solid transparent;padding:14px}
+.r+.r{border-top:1px solid var(--bd)}.r i{display:block;font-style:normal;font-size:.72rem;color:var(--mu);font-weight:700}
+.A{background:var(--a);border-left-color:#3b82d6!important}.B{background:var(--b);border-left-color:#2f9e5f!important}.N{background:var(--n);border-left-color:#d98a1f!important}.C{background:var(--c);border-left-color:#8b5cd6!important}.X{background:var(--ex);border-left-color:#d64545!important}
+.ck{flex:0 0 26px;height:26px;border-radius:50%;border:2px solid var(--mu);display:grid;place-items:center;color:#fff;font-weight:800;margin-top:2px;transition:.15s}
+.dn .ck{background:var(--ok);border-color:var(--ok);transform:scale(1.08)}.dn .tx{opacity:.55;text-decoration:line-through}.dn i{text-decoration:none}
+.tip{background:var(--a);border-radius:14px;padding:10px 12px;margin:10px 0;font-size:.85rem;display:flex;gap:8px;justify-content:space-between}.tip button{border:0;background:none;font-weight:800}
+.tm{text-align:center}.tm .t{font-size:3rem;font-weight:800;letter-spacing:.02em;line-height:1.1}
+.tm button,.cb,.bt{border:1px solid var(--bd);background:var(--cd);border-radius:99px;padding:8px 14px;min-height:40px;margin:3px;font-weight:700}
+.bt.on{background:var(--ac);border-color:var(--ac);color:#fff}
+.cd{display:flex;gap:8px;overflow-x:auto;padding-bottom:6px}.cd div{flex:0 0 auto;min-width:112px;background:var(--cd);border:1px solid var(--bd);border-radius:16px;padding:10px 12px}.cd b{font-size:1.5rem;display:block;line-height:1.1}.cd span{font-size:.72rem;color:var(--mu)}
+.cd .U b{color:#d64545}.cd .S b{color:#d98a1f}.cd .t{border-style:dashed}
+.wk{list-style:none;margin:0;padding:0}.wk li{display:grid;grid-template-columns:62px 1fr;gap:8px;padding:9px 0;border-bottom:1px solid var(--bd);font-size:.86rem}
+#hm{display:grid;grid-template-rows:repeat(7,14px);grid-auto-flow:column;grid-auto-columns:14px;gap:3px;overflow-x:auto;padding:4px}
+#hm button,#hm i{width:14px;height:14px;border-radius:4px;border:0;padding:0;background:var(--bd)}
+#hm .c1{background:#e7b5b5}#hm .c2{background:#a8e0c4}#hm .c3{background:#5dc08f}#hm .c4{background:#22a06b}#hm .xm{outline:2px solid #d64545}#hm .td{outline:2px solid var(--ac)}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:8px}.stats div{background:var(--cd);border:1px solid var(--bd);border-radius:18px;padding:14px}.stats b{font-size:1.7rem;display:block;line-height:1.1}.stats span{font-size:.75rem;color:var(--mu)}
+.bars{display:flex;align-items:flex-end;gap:6px;height:70px}.bars div{flex:1;background:var(--ac);border-radius:6px 6px 0 0;min-height:3px;opacity:.85}
+.rv{display:flex;gap:10px;align-items:center;justify-content:space-between;background:var(--cd);border:1px solid var(--bd);border-radius:16px;padding:12px;margin:6px 0}.rv span i{display:block;font-style:normal;font-size:.7rem;color:var(--mu);font-weight:700}
+input,select{font:inherit;color:var(--tx);background:var(--cd);border:1px solid var(--bd);border-radius:10px;padding:8px;min-height:40px}
+details{background:var(--cd);border:1px solid var(--bd);border-radius:16px;margin:10px 0;padding:0 14px}summary{cursor:pointer;font-weight:800;padding:12px 0}details p,details li{font-size:.88rem}
+.tb{position:fixed;left:0;right:0;bottom:0;display:flex;background:var(--cd);border-top:1px solid var(--bd);padding:6px 8px calc(6px + env(safe-area-inset-bottom,0px))}
+.tb button{flex:1;border:0;background:none;border-radius:12px;padding:6px 0;font-size:.7rem;font-weight:700;color:var(--mu);min-height:48px}.tb button b{display:block;font-size:1.15rem}.tb .on{color:var(--ac)}
+a{color:var(--ac)}
+</style></head>
+<body><main>
+<section class="v" id="v-today">
+<div class="hero" id="hero"></div>
+<div class="tip" id="tip"><span>Tap a task to tick it off. Each tick schedules short revision reminders (the Revise tab). Your progress saves on this device.</span><button id="tx" aria-label="Dismiss">✕</button></div>
+<div class="nav"><button id="pv" aria-label="Previous day">‹</button><input type="date" id="dt" min="2026-11-07" max="2027-05-10"><button id="nx" aria-label="Next day">›</button><button id="td">Today</button></div>
+<div class="strip" id="strip"></div>
+<div class="day" id="day"></div>
+<div id="due"></div>
+<h2>Focus timer</h2>
+<div class="card tm"><div><button class="bt on" data-m="25">25 / 5</button><button class="bt" data-m="50">50 / 10</button></div><div class="mu" id="tl">Focus</div><div class="t" id="tt">25:00</div><div><button id="tg">Start</button><button id="tr">Reset</button></div><div class="mu" id="tf"></div></div>
+</section>
+<section class="v" id="v-plan">
+<h1>Plan</h1>
+<h2>Exam countdown</h2><div class="cd" id="cd"></div>
+<h2>Next 7 days</h2><ul class="wk" id="wk"></ul>
+<h2>Season map</h2><div class="card"><div id="hm"></div><p class="mu">Each square is a day: green = board slots done, red = missed, outlined red = exam. Tap a square to open that day.</p></div>
+<details><summary>Phases</summary><p><b>7 Nov – 31 Dec:</b> one full pass of all subjects, plus 60 min of NEET (Class 11) on school days.<br><b>1 Jan – 13 Feb:</b> second pass, practicals, Physics papers.<br><b>14 Feb – 25 Mar:</b> exam run, ending with a 19-day Biology sprint.<br><b>26 Mar – 1 May:</b> NEET sprint with weekly mocks, CUET alongside.<br><b>2 – 10 May:</b> NEET day, then the CUET push.</p></details>
+<details><summary>Read before using</summary><ul><li><b>* = not announced.</b> NEET UG 2027 is expected on 2 May and CUET UG in May. Shift the last two phases once NTA publishes its bulletins.</li><li>Boards come first. Drop the NEET and CUET lines on a heavy day, never the board slots.</li><li>NEET covers Class 11 and 12; chapters CBSE removed (such as Solid State, p-Block) may still be in it.</li><li>Full topic lists are in the <a href="https://claude.ai/artifact/7WsKRdDsoSD9kaiuZckbfK">boards revision doc</a>.</li></ul></details>
+</section>
+<section class="v" id="v-revise">
+<h1>Revise</h1><p class="mu">Ticking a study slot schedules quick recalls after 1, 3, 7 and 21 days. Spend 5 to 10 minutes on each: close the book and write what you remember.</p>
+<h2>Due now</h2><div id="rv"></div><h2>Coming up</h2><div id="rv2"></div>
+</section>
+<section class="v" id="v-stats">
+<h1>Progress</h1>
+<div class="stats" id="st"></div>
+<h2>Focus minutes, last 7 days</h2><div class="card"><div class="bars" id="fb"></div></div>
+<div id="bk"></div>
+<h2>Mock and paper scores</h2>
+<div class="card"><select id="ms"><option>Physics</option><option>Chemistry</option><option>Biology</option><option>Psychology</option><option>English</option><option>Yoga</option><option>NEET mock</option><option>CUET set</option></select> <input id="sc" type="number" min="0" placeholder="Score" style="width:90px"> / <input id="so" type="number" min="1" placeholder="Out of" style="width:90px"> <button class="cb" id="ma">Add</button><div id="ml"></div></div>
+<p class="mu"><button class="cb" id="ex">Back up</button><button class="cb" id="im">Restore</button> Back up to move progress to another device.</p><textarea id="bx" hidden rows="3" style="width:100%"></textarea>
+</section>
+</main>
+<nav class="tb" id="tb"><button data-t="today"><b>◉</b>Today</button><button data-t="plan"><b>▦</b>Plan</button><button data-t="revise"><b>↻</b>Revise</button><button data-t="stats"><b>▲</b>Progress</button></nav>
+<script>
+const D=(y,m,d)=>new Date(y,m-1,d),K=d=>d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate(),NX=d=>D(d.getFullYear(),d.getMonth()+1,d.getDate()+1);
+const BIO=["Ch1 Flowering plants: pollination, double fertilisation","Ch2a Human reproduction: systems, gametogenesis","Ch2b Menstrual cycle to placenta","Ch3 Reproductive health","Ch4a Mendel and deviations","Ch4b Chromosomes, linkage, disorders","Ch5a DNA structure and replication","Ch5b Transcription, translation, lac operon","Ch6 Evolution","Ch7 Human health and disease","Ch8 Microbes in human welfare","Ch9 Recombinant DNA technology","Ch10 Biotechnology applications","Ch11 Organisms and populations","Ch12 Ecosystem","Ch13 Biodiversity and conservation"];
+const ENG=["Last Lesson + Lost Spring","Deep Water + The Rattrap","Indigo + Poets and Pancakes","The Interview + Going Places","Poems: My Mother at Sixty-Six, Keeping Quiet, A Thing of Beauty","Poems: A Roadside Stand, Aunt Jennifer’s Tigers","Vistas: The Third Level + The Tiger King","Vistas: Journey to the End of the Earth + The Enemy","Vistas: On the Face of It + Memories of Childhood","Reading: unseen and case-based passages","Writing: notice, invitation and reply","Writing: letters","Writing: article","Writing: report and all formats","Timed reading + writing mix"];
+const PSY=["Unit I(a) Intelligence theories","Unit I(b) Emotional intelligence, aptitude, creativity","Unit II(a) Self, type and trait approaches","Unit II(b) Personality approaches and assessment","Unit III Stress and coping","Unit IV(a) Anxiety to dissociative disorders","Unit IV(b) Mood to substance disorders","Unit V Therapeutic approaches","Unit VI Attitudes and prejudice","Unit VII Groups, plus theory sheet"];
+const YOG=["Part A Employability skills","Unit 1 Shatkarma, asana, pranayama","Unit 2a Aahara, Hatha yoga, Patanjali","Unit 2b Bahiranga and Antaranga, Gita lifestyle","Unit 3a First aid, CPR, stress","Unit 3b Disease prevention, personality"];
+const SB={B:BIO,E:ENG,P:PSY,Y:YOG},PF={B:"Biology ",E:"English ",P:"Psychology ",Y:"Yoga "},SEQ="BEPBEYBEPBEPBEYBEPBEPBEYBEPBEYBEPBEPBEYBEPBEYBP";
+const A1=["Physics Ch1a Charges and fields","Chemistry Ch1a Solutions","Physics Ch1b Gauss’s theorem","Chemistry Ch1b Colligative properties","Physics Ch2a Potential","Chemistry Ch2a Electrochemistry","Physics Ch2b Capacitors","Chemistry Ch2b Conductance, Faraday","Physics Ch3a Current electricity","Chemistry Ch3a Kinetics","Physics Ch3b Kirchhoff, bridge","Chemistry Ch3b Arrhenius","Physics Ch4a Biot–Savart, Ampère","Chemistry Ch4 d- and f-block","Physics Ch4b Force, galvanometer","Chemistry Ch5a Coordination","Physics Ch5 Magnetism and matter","Chemistry Ch5b Bonding in complexes","Physics Ch6 EMI","Chemistry Ch6a Haloalkanes","Physics Ch7a AC circuits","Chemistry Ch6b SN1, SN2","Physics Ch7b AC power, transformer","Chemistry Ch7a Alcohols","Physics Ch8 EM waves","Chemistry Ch7b Phenols, ethers","Physics Ch9a Reflection, refraction","Chemistry Ch8a Carbonyl preparation","Physics Ch9b Lenses, prism","Chemistry Ch8b Carbonyl reactions","Physics Ch9c Optical instruments","Chemistry Ch8c Carboxylic acids","Physics Ch10a Huygens’ principle","Chemistry Ch9a Amines","Physics Ch10b Interference, diffraction","Chemistry Ch9b Diazonium salts","Physics Ch11a Photoelectric effect","Chemistry Ch10a Carbohydrates, proteins","Physics Ch11b Matter waves","Chemistry Ch10b Enzymes, nucleic acids","Physics Ch12 Atoms","Physics Ch13 Nuclei","Physics Ch14a Semiconductors","Physics Ch14b Diode, rectifier","Physics mixed test","Chemistry mixed test","Error-log clean-up, formula sheets"];
+const A2=["Physics Ch1 (2nd pass)","Chemistry Solutions (2nd)","Physics Ch2","Chemistry Electrochemistry","Physics Ch3","Chemistry Kinetics","Physics Ch4","Chemistry d- and f-block","Physics Ch5 + Ch6","Chemistry Coordination","Physics Ch7","Chemistry Haloalkanes","Physics Ch8 + Ch14","Chemistry Alcohols, phenols","Physics Ch9a","Chemistry Aldehydes, acids","Physics Ch9b","Chemistry Amines","Physics Ch10","Chemistry Biomolecules","Physics Ch11","Physics Ch12","Physics Ch13","Physics derivations and diagrams","Physics Sample Paper 1 (3 h)","Analyse Paper 1, patch weak chapters","Physics numericals Ch1–5","Physics numericals Ch6–10","Physics Sample Paper 2 (3 h)","Analyse Paper 2, modern physics drill","Physics case-based and assertion–reason","Chemistry Sample Paper 1 (3 h)","Physics Sample Paper 3 (3 h)","Analyse Paper 3, recheck derivations","Physics formula and graph sheet","Physics Sample Paper 4 (3 h)","Analyse Paper 4, chapter summaries","Light Physics: diagrams, formulas"];
+const B2=["Physics practical 1: Section A experiments","Physics practical 2: optics and diode","Chemistry practical 1: volumetric analysis","Chemistry practical 2: salt analysis","Biology practical 1: experiments","Psychology practical 1: case profile, tests","Yoga practical 1: asana, pranayama","English internal: speaking, listening, project","Physics practical 3: activities, project","Chemistry practical 3: content-based","Biology practical 2: spotting","Psychology practical 2: file, viva","Yoga practical 2: file, project","Biology 2nd: Reproduction","English: Flamingo prose","Psychology 2nd: Units I–II","Biology 2nd: Ch4–5","English: writing tasks","Yoga 2nd: Units 1–2","Biology 2nd: Ch6–8","English: poetry","Psychology 2nd: Units III–IV","Biology 2nd: Biotechnology","English: Vistas","Yoga 2nd: Unit 3","Psychology 2nd: Units V–VII","Biology 2nd: Ecology","English: reading","Chemistry organic conversions","Psychology paper: long answers","English: article, report, job application","Biology diagram drill 1","English literature mock","Chemistry physical numericals","Yoga sample paper (2 h)","Biology diagrams and genetics","Chemistry organic reasoning","Admit card check, asana practice"];
+const P3=[["Physics final consolidation","Pack bag, no new topics"],["Physics eve: 2 h only","Rest"],["PHYSICS EXAM 10:30","Light Chemistry notes"],["Chemistry: Solutions, Electrochemistry","Psychology Unit I recall"],["Chemistry: Kinetics, d- and f-block","English prose recall"],["Chemistry: Coordination, Haloalkanes","Yoga Unit 1, Part A"],["Chemistry: Alcohols, Carbonyls","Psychology Units II–III"],["Chemistry Sample Paper 2 (3 h)","English poetry, Vistas"],["Chemistry: Amines, Biomolecules, weak spots","Yoga Units 2–3"],["Chemistry: conversions and reasoning","Psychology Unit IV"],["Chemistry board paper (timed)","Biology keep-warm, 30 min"],["Chemistry rapid revision, 50 MCQs","Psychology Units V–VII"],["Chemistry eve: 2 h only","Rest"],["CHEMISTRY EXAM 10:30","Psychology Units I–II, 90 min"],["Psychology full revision, Units I–VII","Yoga Unit 3 recap"],
+["Psychology full paper and analysis","Yoga Unit 3, Part A"],["PSYCHOLOGY EXAM 10:30","Yoga Units 1–2, sample paper"],["Yoga final revision (2.5 h)","English formats, reading, literature (3 h)"],["YOGA EXAM 10:30 (2 h paper)","English sample paper (3 h)"],["ENGLISH EXAM 10:30","Full rest"],
+["Biology Ch1 Flowering plants","Plan the 19-day sprint"],["Biology Ch2 Human reproduction","Draw 6 diagrams from memory"],["Biology Ch3 + Unit VI questions","Update error log"],["Biology Ch4a Genetics, 15 problems","Pedigrees, test crosses"],["Biology Ch4b Chromosomes, disorders","Recall (Eid: use flex if lost)"],["Biology Ch5a DNA, replication","Draw replication fork"],["Biology Ch5b Transcription, translation","Draw lac operon"],["Biology Ch6 Evolution + Unit VII questions","Flowcharts"],["Flex + Biology Test 1 (Units VI–VII)","Catch-up"],["Biology Ch7 Human health and disease","Pathogen–disease table"],["Biology Ch8 Microbes + Ch9 rDNA","Draw rDNA steps, PCR"],["Biology Ch10 Applications + Units VIII–IX","GMO comparison table"],["Biology Ch11 + Ch12 Ecology","Draw graphs, pyramids"],["Biology Ch13 + Unit X questions","Conservation lists"],["Biology Sample Paper 1 (3 h)","Redo errors"],["Diagrams and terminology day","Flex"],["Holi: light 90 min of notes","Rest"],["Biology Sample Paper 2 (3 h)","Case-based questions"],["Biology eve: one page per unit","Rest early"],["BIOLOGY EXAM 10:30","Done with boards"]];
+const X=new Set(["2-15","2-16","2-26","2-27","3-1","3-2","3-3","3-4","3-5","3-24","3-25"]),M={};
+const SUN=["Flex + weekly test: catch up, timed test on the week’s chapters, error log","Recall the week’s notes (45 min)"];
+function neet(d){const m=d.getMonth()+1,e=d.getDate(),w=d.getDay(),k=m+"-"+e;if(X.has(k)||k=="11-8"||w==0)return"";
+if(d<D(2027,1,1))return"60 min: Class 11 "+[,"Physics","Chemistry","Biology","Physics","Chemistry","Biology"][w]+" revision + 30 MCQs";
+if(d<D(2027,2,14))return"45 min: 40 mixed MCQs (Class 11 + 12), then error review";
+if(d<D(2027,3,6))return"30 min: Biology NCERT line by line (Class 12)";
+return"60 min: "+(e%2?"Physics":"Chemistry")+" MCQs. The Biology sprint doubles as NEET Biology"}
+function cuet(d){const k=(d.getMonth()+1)+"-"+d.getDate();if(d.getDay()||d<D(2026,11,15)||(d>D(2027,2,7)&&k!="3-7"))return"";return d<D(2027,1,1)?"30 min: English reading + vocabulary":"60 min: General Test (GK, current affairs, reasoning, quant)"}
+let i=0,j=0,n1=0,n2=0;
+for(let d=D(2026,11,7);d<=D(2027,5,10);d=NX(d)){const w=d.getDay(),k=d.getMonth()+1+"-"+d.getDate();let a,b,c=cuet(d),n=neet(d),t="";
+if(d<=D(2026,12,31)){if(w==0){a=k=="11-8"?"Diwali: rest":SUN[0];b=k=="11-8"?"":SUN[1]}else{a=A1[n1];const s=SEQ[n1];b=PF[s]+SB[s][[...SEQ.slice(0,n1)].filter(x=>x==s).length];n1++}}
+else if(d<=D(2027,2,13)){if(w==0){a=SUN[0];b=SUN[1]}else{a=A2[n2];b=B2[n2];n2++}}
+else if(d<=D(2027,3,25)){[a,b]=P3[Math.round((d-D(2027,2,14))/864e5)];if(/EXAM/.test(a))t="X"}
+else{n="";const dd=d.getDate(),mo=d.getMonth()+1;
+if(mo==3&&dd==26){a="Rest and reset";b="List weak chapters from board-paper errors";c=""}
+else if(mo==3&&dd==27){a="Diagnostic NEET mock (timed) and analysis";b="Choose weak chapters, Class 11 + 12";c=""}
+else if(mo==5&&dd==2){a="NEET UG* (expected date, confirm with NTA)";b="";c="";t="X"}
+else if(mo==5&&dd==3){a="Rest after NEET";b="Light review of CUET subjects";c="Check NTA for CUET dates"}
+else if(mo==5){a="CUET domain sets: Physics, Chemistry, Biology, Psychology (50 MCQs, 60 min each)";b="General Test + English timed sets";c="Shift this block to match the NTA dates"}
+else if(d>=D(2027,4,26)){a=dd==1&&mo==5?"Admit card, centre, rest":"Revise one-pagers: formulas, reactions, diagrams";b="Light MCQs, 1 h. No new topics";c="Sleep 7–8 h"}
+else if(w==0){a="NEET full-length timed mock";b="Analyse the mock (2 h), update error log";c="CUET: 60 min General Test"}
+else if(w%3==1){a="NEET Physics: weak chapters, Class 11 + 12 (3 h)";b="Physics MCQs (2 h) and error log";c="CUET: English reading + vocabulary, 30 min"}
+else if(w%3==2){a="NEET Chemistry: weak chapters, Class 11 + 12 (3 h)";b="Chemistry MCQs (2 h) and error log";c="CUET: General Test, 45 min"}
+else{a="NEET Biology: NCERT line by line, Class 11 + 12 (3 h)";b="Biology MCQs (2 h) and diagrams";c="CUET: Psychology or Biology set (50 MCQs, 60 min)"}}
+M[K(d)]={a,b,n,c,t}}
+
+const $=id=>document.getElementById(id),iso=d=>d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0"),PD=(d,n=-1)=>D(d.getFullYear(),d.getMonth()+1,d.getDate()+n),F=d=>d.toLocaleDateString("en-IN",{weekday:"long",day:"numeric",month:"long"}),S=d=>d.toLocaleDateString("en-IN",{weekday:"short",day:"numeric",month:"short"});
+const T0=new Date(),T=D(T0.getFullYear(),T0.getMonth()+1,T0.getDate()),LO=D(2026,11,7),HI=D(2027,5,10),cl=d=>d<LO?LO:d>HI?HI:d;let cur=cl(T);
+let S0={done:{},rv:[],focus:{},mocks:[],tip:0};
+try{const o=JSON.parse(localStorage.getItem("pcb2")||"null");if(o)Object.assign(S0,o);else S0.done=JSON.parse(localStorage.getItem("pcb1")||"{}")}catch(e){}
+const sv=()=>{try{localStorage.setItem("pcb2",JSON.stringify(S0))}catch(e){}},sl=r=>r.t?[["a",r.a]]:[["a",r.a],["b",r.b],["n",r.n],["c",r.c]].filter(x=>x[1]),dn=(d,s)=>S0.done[K(d)+"|"+s],bd=d=>{const r=M[K(d)];return r?sl(r).filter(x=>x[0]<"c"):[]},ad=d=>bd(d).every(x=>dn(d,x[0])),go=s=>{const p=s.split("-");cur=D(+p[0],+p[1],+p[2]);tab("today");render()};
+const E=[["Physics",2027,2,16],["Chemistry",2027,2,27],["Psychology",2027,3,2],["Yoga",2027,3,4],["English",2027,3,5],["Biology",2027,3,25],["NEET UG*",2027,5,2],["CUET UG*",2027,5,11]],dl=e=>Math.round((D(e[1],e[2],e[3])-T)/864e5),stt=L=>L==0?"TODAY":L<=3?"URGENT":L<=14?"THIS WEEK":"UPCOMING";
+const NL={a:"Slot A: main",b:"Slot B: second subject",n:"NEET",c:"CUET"};
+function pct(d){const r=M[K(d)],L=r?sl(r):[];return L.length?Math.round(100*L.filter(x=>dn(d,x[0])).length/L.length):0}
+function render(){
+const nx=E.find(e=>dl(e)>=0),L=nx?dl(nx):0;
+$("hero").innerHTML=nx?`<div><span class="chip">${stt(L)}</span><b>${L}</b><small>days to ${nx[0].replace("*","")} · ${nx[3]} ${["","Jan","Feb","Mar","Apr","May"][nx[2]]}</small></div><div class="pr" style="--p:${pct(cl(T))}"><b>${pct(cl(T))}%</b></div>`:"";
+$("tip").style.display=S0.tip?"none":"";
+const r=M[K(cur)],ls=r?sl(r):[];$("dt").value=iso(cur);
+$("day").innerHTML=`<div class="dh">${F(cur)}<small>${K(cur)==K(T)?"Today · ":""}${ls.filter(x=>dn(cur,x[0])).length} of ${ls.length} done</small></div>`+(r?ls.map(([s,t])=>`<button class="r ${r.t?"X":s.toUpperCase()}${dn(cur,s)?" dn":""}" data-s="${s}"><span class="ck">${dn(cur,s)?"✓":""}</span><span class="tx"><i>${r.t?"Key day":NL[s]}</i>${t}</span></button>`).join(""):`<div class="r B">No plan on this date.</div>`);
+$("strip").innerHTML=[-3,-2,-1,0,1,2,3].map(x=>{const e=PD(cur,x);if(e<LO||e>HI)return"<span></span>";return`<button class="${x?"":"on "}${bd(e).length&&ad(e)?"ok":""}" data-d="${iso(e)}"><small>${e.toLocaleDateString("en-IN",{weekday:"short"})}</small><b>${e.getDate()}</b><i></i></button>`}).join("");
+const due=S0.rv.filter(x=>!x.ok&&x.due<=iso(T)),nd=S0.rv.filter(x=>!x.ok&&x.due>iso(T)).sort((a,b)=>a.due<b.due?-1:1).slice(0,6);
+const ri=(x,i,o)=>`<div class="rv"><span><i>${o?"Due "+x.due:x.due<iso(T)?"Overdue":"Today"}</i>${x.t}</span>${o?"":`<button class="cb" data-r="${S0.rv.indexOf(x)}">Done</button>`}</div>`;
+$("rv").innerHTML=due.length?due.map((x,i)=>ri(x,i,0)).join(""):'<p class="mu">Nothing due. Tick a study slot to start your revision queue.</p>';
+$("rv2").innerHTML=nd.length?nd.map((x,i)=>ri(x,i,1)).join(""):'<p class="mu">Empty for now.</p>';
+$("due").innerHTML=due.length?`<button class="cb" data-t="revise" style="width:100%;margin:10px 0">↻ ${due.length} revision${due.length>1?"s":""} due. Open Revise</button>`:"";
+$("cd").innerHTML=E.map(e=>{const l=dl(e);return`<div class="${e[0].includes("*")?"t ":""}${l>=0&&l<=3?"U":l>=0&&l<=14?"S":""}"><b>${l>=0?l:"Done"}</b><span>${l>=0?stt(l)+" · ":""}${e[0]}</span></div>`}).join("");
+$("wk").innerHTML=[...Array(7)].map((_,x)=>{const e=PD(cur,x),q=M[K(e)];return q?`<li><b>${S(e)}</b><span>${q.a}${q.b?" · "+q.b:""}</span></li>`:""}).join("");
+let h="";for(let i=0;i<LO.getDay();i++)h+="<i></i>";for(let d=LO;d<=HI;d=NX(d)){const b=bd(d),k=b.filter(x=>dn(d,x[0])).length,f=b.length?k/b.length:0,q=M[K(d)],c=d>T||!b.length?"":f>=1?"c4":f>=.5?"c3":f>0?"c2":"c1";h+=`<button class="${c}${q&&q.t?" xm":""}${K(d)==K(T)?" td":""}" data-d="${iso(d)}" aria-label="${S(d)}"></button>`}$("hm").innerHTML=h;
+let t=0,c=0,bl=[];for(let d=LO;d<=T&&d<=HI;d=NX(d)){const b=bd(d),k=b.filter(x=>dn(d,x[0])).length;t+=b.length;c+=k;if(d<T&&k<b.length)bl.push(d)}
+let s=0,d=cl(T);if(!bd(d).length||!ad(d))d=PD(d);while(d>=LO&&bd(d).length&&ad(d)){s++;d=PD(d)}
+const fm=Object.values(S0.focus).reduce((a,b)=>a+b,0);
+$("st").innerHTML=`<div><b>${t?Math.round(100*c/t):0}%</b><span>board slots done</span></div><div><b>${s}</b><span>day streak</span></div><div><b>${bl.length}</b><span>days to catch up</span></div><div><b>${(fm/60).toFixed(1)} h</b><span>focused so far</span></div>`;
+$("bk").innerHTML=bl.length?`<h2>Catch up</h2><p>${bl.slice(-5).map(d=>`<button class="cb" data-d="${iso(d)}">${S(d)}</button>`).join("")}</p>`:"";
+const days=[...Array(7)].map((_,i)=>S0.focus[iso(PD(T,i-6))]||0),mx=Math.max(30,...days);
+$("fb").innerHTML=days.map((v,i)=>`<div style="height:${Math.round(100*v/mx)}%" title="${v} min"></div>`).join("");
+const mk=S0.mocks.slice(-12);$("ml").innerHTML=mk.length?`<p class="mu" style="margin:10px 0 4px">Trend, latest ${mk.length}</p><svg viewBox="0 0 200 40" width="100%" height="48" aria-hidden="true"><polyline fill="none" stroke="var(--ac)" stroke-width="2" points="${mk.map((m,i)=>(mk.length>1?i*200/(mk.length-1):100)+","+(38-36*m.s/m.o)).join(" ")}"/></svg>`+mk.slice(-5).reverse().map(m=>`<div class="rv"><span><i>${m.d}</i>${m.n}</span><b>${m.s}/${m.o} · ${Math.round(100*m.s/m.o)}%</b></div>`).join(""):""}
+function tab(t){document.querySelectorAll(".v").forEach(v=>v.classList.toggle("on",v.id=="v-"+t));document.querySelectorAll("#tb button").forEach(b=>b.classList.toggle("on",b.dataset.t==t));if(location.hash!="#"+t)location.hash=t;scrollTo(0,0)}
+document.onclick=e=>{const t=e.target.closest("[data-t]");if(t)return tab(t.dataset.t);const d=e.target.closest("[data-d]");if(d)return go(d.dataset.d);
+const b=e.target.closest("[data-s]");if(b){const s=b.dataset.s,k=K(cur)+"|"+s,r=M[K(cur)];
+if(S0.done[k]){delete S0.done[k];S0.rv=S0.rv.filter(x=>x.k!=k||x.ok)}else{S0.done[k]=1;if(s<"c"&&!r.t&&!/flex|rest|mock|test|error|admit|pack|light|done|plan/i.test(r[s]))[1,3,7,21].forEach(o=>S0.rv.push({k,t:r[s],due:iso(PD(T,o)),ok:0}));try{navigator.vibrate(15)}catch(x){}}sv();return render()}
+const q=e.target.closest("[data-r]");if(q){S0.rv[+q.dataset.r].ok=1;sv();render()}};
+$("tx").onclick=()=>{S0.tip=1;sv();render()};
+$("pv").onclick=()=>{if(PD(cur)>=LO){cur=PD(cur);render()}};$("nx").onclick=()=>{if(NX(cur)<=HI){cur=NX(cur);render()}};$("td").onclick=()=>{cur=cl(T);render()};
+$("dt").onchange=e=>{const p=e.target.value.split("-");if(p.length==3){const d=D(+p[0],+p[1],+p[2]);if(d>=LO&&d<=HI){cur=d;render()}}};
+$("ma").onclick=()=>{const s=+$("sc").value,o=+$("so").value;if(!(o>0&&s>=0&&s<=o))return;S0.mocks.push({d:S(T),n:$("ms").value,s,o});$("sc").value=$("so").value="";sv();render()};
+$("ex").onclick=()=>{const x=$("bx");x.hidden=false;x.value=JSON.stringify(S0);x.select();try{navigator.clipboard.writeText(x.value)}catch(e){}};
+$("im").onclick=()=>{const x=$("bx");if(x.hidden){x.hidden=false;x.value="";x.placeholder="Paste your backup, then tap Restore again";return}try{S0=Object.assign({done:{},rv:[],focus:{},mocks:[],tip:1},JSON.parse(x.value));sv();x.hidden=true;render()}catch(e){x.value="";x.placeholder="That backup could not be read"}};
+let TM={f:25,b:5,ph:"Focus",left:1500,end:0,run:0};
+const mm=s=>String(Math.floor(s/60)).padStart(2,"0")+":"+String(s%60).padStart(2,"0");
+function tdraw(){$("tt").textContent=mm(TM.left);$("tl").textContent=TM.ph;$("tg").textContent=TM.run?"Pause":"Start";$("tf").textContent="Focused today: "+(S0.focus[iso(T)]||0)+" min"}
+setInterval(()=>{if(!TM.run)return;TM.left=Math.max(0,Math.round((TM.end-Date.now())/1e3));if(!TM.left){if(TM.ph=="Focus"){S0.focus[iso(T)]=(S0.focus[iso(T)]||0)+TM.f;sv();render()}TM.ph=TM.ph=="Focus"?"Break":"Focus";TM.left=60*(TM.ph=="Focus"?TM.f:TM.b);TM.end=Date.now()+TM.left*1e3;try{navigator.vibrate([200,100,200])}catch(e){}}tdraw()},1000);
+$("tg").onclick=()=>{TM.run=!TM.run;if(TM.run)TM.end=Date.now()+TM.left*1e3;tdraw()};
+$("tr").onclick=()=>{TM.run=0;TM.ph="Focus";TM.left=TM.f*60;tdraw()};
+document.querySelectorAll("[data-m]").forEach(b=>b.addEventListener("click",()=>{TM.f=+b.dataset.m;TM.b=TM.f==25?5:10;document.querySelectorAll("[data-m]").forEach(x=>x.classList.toggle("on",x==b));TM.run=0;TM.ph="Focus";TM.left=TM.f*60;tdraw()}));
+addEventListener("hashchange",()=>{const t=location.hash.slice(1);if(["today","plan","revise","stats"].includes(t))tab(t)});
+render();tdraw();tab(["today","plan","revise","stats"].includes(location.hash.slice(1))?location.hash.slice(1):"today");
+</script></body></html>

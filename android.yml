@@ -1,0 +1,30 @@
+name: Build Android APK
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+jobs:
+  apk:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 20 }
+      - uses: actions/setup-java@v4
+        with: { distribution: temurin, java-version: 17 }
+      - uses: android-actions/setup-android@v3
+      - name: Install NDK and platform
+        run: |
+          sdkmanager "ndk;27.0.12077973" "platforms;android-34" "build-tools;34.0.0"
+          echo "NDK_HOME=$ANDROID_HOME/ndk/27.0.12077973" >> "$GITHUB_ENV"
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: aarch64-linux-android,armv7-linux-androideabi,i686-linux-android,x86_64-linux-android
+      - run: npm install
+      - run: npx tauri icon app-icon.png
+      - run: npx tauri android init
+      - run: npx tauri android build --apk --debug
+      - uses: actions/upload-artifact@v4
+        with:
+          name: boards-plan-apk
+          path: src-tauri/gen/android/app/build/outputs/apk/**/*.apk
