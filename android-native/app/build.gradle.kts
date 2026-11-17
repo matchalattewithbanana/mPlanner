@@ -16,7 +16,7 @@ android {
     compileSdk = 36
 
     defaultConfig {
-        applicationId = "com.studyplan.boardsplan"
+        applicationId = "app.mplanner.native"
         minSdk = 26
         targetSdk = 35
         versionCode = 1

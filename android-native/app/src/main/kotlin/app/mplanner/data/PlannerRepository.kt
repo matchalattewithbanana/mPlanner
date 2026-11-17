@@ -20,6 +20,8 @@ class PlannerRepository(private val database: PlannerDatabase) {
     val mocks: Flow<List<MockEntity>> = dao.observeMocks()
 
     suspend fun seedDefaults(context: Context) {
+        val preferences = context.getSharedPreferences("mplanner_seed", Context.MODE_PRIVATE)
+        if (preferences.getBoolean("seeded_v1", false)) return
         val document = context.assets.open("study_plan_2026_2027.json").bufferedReader().use { it.readText() }
         val array = JSONObject(document).getJSONArray("tasks")
         val tasksToInsert = (0 until array.length()).map { index ->
@@ -34,6 +36,7 @@ class PlannerRepository(private val database: PlannerDatabase) {
             dao.insertExams(SchoolExamSchedule.exams.map { it.toEntity() })
             dao.insertTasks(tasksToInsert)
         }
+        check(preferences.edit().putBoolean("seeded_v1",true).commit()) { "Failed to save initialization status" }
     }
 
     suspend fun addTask(date: LocalDate, title: String, subject: String? = null) {
@@ -122,6 +125,7 @@ class PlannerRepository(private val database: PlannerDatabase) {
         val revisions = mutableListOf<RevisionEntity>()
         val sessions = mutableListOf<SessionEntity>()
         val mocks = mutableListOf<MockEntity>()
+        val exams = mutableListOf<ExamEntity>()
         val native = root.optInt("schemaVersion", 0) == 2 && root.optString("app") == "mPlanner"
         if (native) {
             fun objects(key: String, max: Int): List<JSONObject> {
@@ -146,6 +150,15 @@ class PlannerRepository(private val database: PlannerDatabase) {
                 SessionEntity(bounded(it.getString("id"),200), validatedDate(it.getString("date")),
                     nullableString(it,"subject",100), it.getLong("seconds").also { sec -> require(sec in 1..86400) },
                     it.getLong("endedAtEpochMillis").also { ms -> require(ms >= 0) })
+            }
+            exams += objects("exams", 1_000).map {
+                ExamEntity(
+                    bounded(it.getString("id"),160),validatedDate(it.getString("date")),
+                    bounded(it.getString("subject"),100),bounded(it.getString("series"),100),
+                    bounded(it.getString("status"),100),
+                    nullableString(it,"readingStart",20),nullableString(it,"writingStart",20),
+                    nullableString(it,"writingEnd",20)
+                )
             }
             mocks += objects("mocks", 10_000).map {
                 val score=it.getDouble("score");val maximum=it.getDouble("maximum")
@@ -205,11 +218,12 @@ class PlannerRepository(private val database: PlannerDatabase) {
                     if (old != null) dao.upsertTask(old.copy(state="COMPLETED"))
                 } else dao.upsertTask(task)
             }
+            exams.forEach { dao.upsertExam(it) }
             dao.insertRevisions(revisions)
             sessions.forEach { dao.insertSession(it) }
             dao.insertMocks(mocks)
         }
-        return tasks.size + revisions.size + sessions.size + mocks.size
+        return tasks.size + exams.size + revisions.size + sessions.size + mocks.size
     }
 
     private fun bounded(value:String, length:Int):String {
