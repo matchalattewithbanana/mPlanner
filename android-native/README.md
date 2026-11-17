@@ -1,34 +1,39 @@
-# mPlanner — native Kotlin Android app
+# mPlanner Native
 
-This is the in-progress Kotlin/Jetpack Compose replacement for the earlier Tauri/WebView planner.
+The native Android implementation uses Kotlin, Jetpack Compose, Room and WorkManager. Java 17, Android SDK 36 and the **Gradle 8.13 wrapper** are required.
 
-## Implemented
-- Native Compose Today, Plan, Revise, Focus and Insights screens.
-- Room database storing study tasks, school examinations, revision events, focus sessions and mock results.
-- Original 2026–27 study template bundled as 527 dated task entries.
-- Examination-day warnings for preboard/rehearsal dates from the school's uploaded schedules.
-- Task completion schedules 1, 3, 7 and 21-day revision prompts. Revision ratings of Again/Hard create earlier follow-up.
-- Monotonic-clock study timer that resumes when the app process restarts on the same device boot; partial sessions can be saved.
-- JSON import/export via Android's system document picker. Import handles old `pcb1`/`pcb2` progress backups.
-- Native Android validation CI builds a debug APK **without publishing artifacts or releases**.
-
-## Development
-Requires Android SDK 36, JDK 17 and Gradle 8.13.
+## Build and test
 
 ```bash
-cd android-native
-gradle :app:testDebugUnitTest :app:assembleDebug
+./gradlew :app:testDebugUnitTest :app:assembleDebug
 ```
 
-The included Gradle wrapper *properties* are not a complete wrapper; local builds currently require installed Gradle. CI provisions it.
+Use `gradlew.bat` on Windows. CI runs the native test and debug-assemble tasks, without publishing an APK or release.
 
-## Migration
-The old WebView's `localStorage` is **not** directly accessible to the native app. On the old app, use its backup button to copy the `pcb2` JSON. Save that text as a .json file on the device. In Kotlin mPlanner, tap Backup > Import and select it. Export a native backup before importing anything. For safe migration the native app currently uses a distinct application ID (app.mplanner.native), so it can be installed alongside the old Tauri app. Keep the original app installed until import has been tested. A future in-place replacement would require identical application ID and signing certificates.
+## Implemented capabilities
 
-## Known limitations
-- Not yet device-tested; verify CI compilation, migration and runtime behavior before shipping.
-- Reminders are visible in the revision tab but not currently dispatched as system notifications.
-- Native mock-history and subject editing are basic. App release signing and distribution remain unconfigured.
-- Do not delete the old app until its data has been exported and verified in native.
+- Today: date navigation, task creation/editing and completion; exam-day warnings and move-to-tomorrow action.
+- Plan: upcoming/all examination calendar, custom exam entry and imported study template.
+- Revise: scheduled 1, 3, 7 and 21-day reviews with Again / Hard / Good / Easy ratings.
+- Focus: on-device monotonic countdown, pause/resume, save partial duration, per-subject tracking.
+- Insights: completion totals, focus time and personal mock-score history.
+- Backup: system document picker for JSON exports and imports; supports legacy `pcb1`/`pcb2` exports and versioned native backups.
+- Alerts: optional WorkManager-based periodic review reminders; notification permission requested on Android 13+.
+- Persistent Room store, offline by default; no sign-in needed.
 
-See [migration plan](../docs/KOTLIN_MIGRATION_PLAN.md).
+## Exam timetable and source confidence
+
+- School preboard: Nov 18–Dec 1, 2026.
+- School rehearsal: Dec 15, 2026–Jan 6, 2027.
+- CBSE Class XII boards: Feb 16–Mar 25, 2027 (subject schedule).
+- NEET/CUET markers are tentative and editable by adding a personal exam date.
+
+The school's general exam end time is contradictory in the PDF; it remains unverified in the app instead of being guessed.
+
+## Safe migration
+
+The old Tauri app uses a different storage mechanism. The native app has application ID `app.mplanner.native` so both apps can coexist for side-by-side validation. Back up from the old app, save the JSON locally, then import through the native app. **Keep the old app installed until all records have been verified.** Native import is additive and idempotent for matching records, but changing original records with matching IDs will update them.
+
+## Release gate
+
+Do not publish until a physical device test validates clock recovery after background/force-stop, Android notification permission behavior, the import of a real Tauri backup, and signed upgrade continuity. Test process death and a local-time rollover separately. No production keystore or Google Play configuration is committed to this repository.
