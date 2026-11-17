@@ -186,6 +186,7 @@ private fun TodayScreen(
             dismissButton = { TextButton(onClick = { editing=null }) { Text("Cancel") } }
         )
     }
+    Column(Modifier.fillMaxSize()) {
     Row(Modifier.fillMaxWidth(),horizontalArrangement=Arrangement.SpaceBetween,verticalAlignment=Alignment.CenterVertically) {
         TextButton(onClick={onDate(date.minusDays(1))}) { Text("‹") }
         Text(date.format(DateTimeFormatter.ofPattern("EEE, dd MMM yyyy")),fontWeight=FontWeight.Bold)
@@ -230,6 +231,7 @@ private fun TodayScreen(
         OutlinedTextField(value=newTitle,onValueChange={newTitle=it.take(300)},label={Text("Add study task")},
             singleLine=true,modifier=Modifier.weight(1f))
         TextButton(onClick={if(newTitle.isNotBlank()){onAdd(date,newTitle,null);newTitle=""}}) { Text("Add") }
+    }
     }
 }
 
