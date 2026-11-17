@@ -1,27 +1,34 @@
-# mPlanner Native — Kotlin Android development
+# mPlanner — native Kotlin Android app
 
-This is an early **native Android project scaffold** using Kotlin, Jetpack Compose and Room. It is not yet feature-complete or a published APK.
+This is the in-progress Kotlin/Jetpack Compose replacement for the earlier Tauri/WebView planner.
 
-## Current features
-- Material 3 Compose shell with Today / Plan / Revise / Focus / Insights navigation
-- Room database with tasks, exams and study sessions
-- Seeded school preboard/rehearsal dates, duplicate-safe on app restarts
-- Create and complete local study tasks; browse daily plan and upcoming exams
-- Pure Kotlin, non-destructive exam-priority scheduling logic and unit tests
+## Implemented
+- Native Compose Today, Plan, Revise, Focus and Insights screens.
+- Room database storing study tasks, school examinations, revision events, focus sessions and mock results.
+- Original 2026–27 study template bundled as 369 dated task entries.
+- Examination-day warnings for preboard/rehearsal dates from the school's uploaded schedules.
+- Task completion schedules 1, 3, 7 and 21-day revision prompts. Revision ratings of Again/Hard create earlier follow-up.
+- Monotonic-clock study timer that resumes when the app process restarts on the same device boot; partial sessions can be saved.
+- JSON import/export via Android's system document picker. Import handles old `pcb1`/`pcb2` progress backups.
+- Native Android validation CI builds a debug APK **without publishing artifacts or releases**.
 
-**Still pending:** legacy `pcb1`/`pcb2` import, production focus timer, revision queue, realistic progress analytics, reminders, exam-aware deferral UI, migration QA, signing, and production builds. These are deliberately not presented as complete.
+## Development
+Requires Android SDK 36, JDK 17 and Gradle 8.13.
 
-## Build prerequisites
-Android SDK API 36, JDK 17, Gradle 8.13 and internet access for dependency resolution.
-
-```sh
+```bash
 cd android-native
-gradle :app:assembleDebug
-gradle :app:testDebugUnitTest
+gradle :app:testDebugUnitTest :app:assembleDebug
 ```
 
-A Gradle wrapper *properties file* is present, but wrapper bootstrap scripts/JAR are not checked in yet; use a compatible installed Gradle or generate a validated wrapper before CI integration.
+The included Gradle wrapper *properties* are not a complete wrapper; local builds currently require installed Gradle. CI provisions it.
 
-The Tauri build remains unchanged. The Android application ID matches the previous Tauri identifier to allow evaluating an eventual in-place migration, but a real update depends on matching signing certificates.
+## Migration
+The old WebView's `localStorage` is **not** directly accessible to the native app. On the old app, use its backup button to copy the `pcb2` JSON. Save that text as a .json file on the device. In Kotlin mPlanner, tap Backup > Import and select it. Export a native backup before importing anything. A new app update can only replace the old APK in place if applicationId and signing certificates match, otherwise remove/install after backing up user data.
 
-Review [migration plan](../docs/KOTLIN_MIGRATION_PLAN.md) before shipping.
+## Known limitations
+- Not yet device-tested; verify CI compilation, migration and runtime behavior before shipping.
+- Reminders are visible in the revision tab but not currently dispatched as system notifications.
+- Native mock-history and subject editing are basic. App release signing and distribution remain unconfigured.
+- Do not delete the old app until its data has been exported and verified in native.
+
+See [migration plan](../docs/KOTLIN_MIGRATION_PLAN.md).

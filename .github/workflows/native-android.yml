@@ -1,0 +1,35 @@
+name: Native Android validation
+on:
+  push:
+    branches: [main, feat/kotlin-migration-exam-replan]
+    paths:
+      - 'android-native/**'
+      - '.github/workflows/native-android.yml'
+  pull_request:
+    paths:
+      - 'android-native/**'
+      - '.github/workflows/native-android.yml'
+  workflow_dispatch:
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: android-actions/setup-android@v3
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.13'
+      - name: Install Android SDK 36
+        run: sdkmanager "platforms;android-36" "build-tools;36.0.0"
+      - name: Test native app
+        working-directory: android-native
+        run: gradle :app:testDebugUnitTest --stacktrace
+      - name: Assemble debug APK (validation only, no publication)
+        working-directory: android-native
+        run: gradle :app:assembleDebug --stacktrace
