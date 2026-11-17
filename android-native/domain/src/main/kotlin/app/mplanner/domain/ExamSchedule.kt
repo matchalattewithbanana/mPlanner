@@ -5,7 +5,7 @@ import java.time.LocalTime
 
 enum class ExamSeries { PREBOARD, REHEARSAL, BOARD, ENTRANCE }
 enum class DateStatus { CONFIRMED_SCHOOL, VERIFIED_OFFICIAL, TENTATIVE }
-enum class Subject { PHYSICS, CHEMISTRY, BIOLOGY, PSYCHOLOGY, ENGLISH, YOGA }
+enum class Subject { PHYSICS, CHEMISTRY, BIOLOGY, PSYCHOLOGY, ENGLISH, YOGA, NEET, CUET }
 
 data class Exam(
     val id: String,
@@ -49,5 +49,38 @@ object SchoolExamSchedule {
         exam(ExamSeries.REHEARSAL, Subject.CHEMISTRY, "2027-01-02"),
         exam(ExamSeries.REHEARSAL, Subject.BIOLOGY, "2027-01-04"),
         exam(ExamSeries.REHEARSAL, Subject.YOGA, "2027-01-06")
+    )
+}
+
+/**
+ * Class XII dates from the 2027 CBSE schedule. These are deliberately distinct
+ * from the school exams, and should be re-verified before distribution.
+ */
+object BoardExamSchedule {
+    private fun exam(subject: Subject, date: String) = Exam(
+        id = "board-${subject.name.lowercase()}-$date",
+        subject = subject,
+        date = LocalDate.parse(date),
+        series = ExamSeries.BOARD,
+        dateStatus = DateStatus.VERIFIED_OFFICIAL,
+        writingStart = LocalTime.of(10, 30)
+    )
+
+    val exams = listOf(
+        exam(Subject.PHYSICS,"2027-02-16"),
+        exam(Subject.CHEMISTRY,"2027-02-27"),
+        exam(Subject.PSYCHOLOGY,"2027-03-02"),
+        exam(Subject.YOGA,"2027-03-04"),
+        exam(Subject.ENGLISH,"2027-03-05"),
+        exam(Subject.BIOLOGY,"2027-03-25")
+    )
+}
+
+object TentativeEntranceSchedule {
+    val exams = listOf(
+        Exam("tentative-neet-2027",Subject.NEET,LocalDate.parse("2027-05-02"),
+            ExamSeries.ENTRANCE,DateStatus.TENTATIVE),
+        Exam("tentative-cuet-2027",Subject.CUET,LocalDate.parse("2027-05-11"),
+            ExamSeries.ENTRANCE,DateStatus.TENTATIVE)
     )
 }

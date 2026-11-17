@@ -4,6 +4,8 @@ import android.content.Context
 import androidx.room.withTransaction
 import app.mplanner.domain.Exam
 import app.mplanner.domain.SchoolExamSchedule
+import app.mplanner.domain.BoardExamSchedule
+import app.mplanner.domain.TentativeEntranceSchedule
 import kotlinx.coroutines.flow.Flow
 import org.json.JSONArray
 import org.json.JSONObject
@@ -33,7 +35,7 @@ class PlannerRepository(private val database: PlannerDatabase) {
             )
         }
         database.withTransaction {
-            dao.insertExams(SchoolExamSchedule.exams.map { it.toEntity() })
+            dao.insertExams((SchoolExamSchedule.exams + BoardExamSchedule.exams + TentativeEntranceSchedule.exams).map { it.toEntity() })
             dao.insertTasks(tasksToInsert)
         }
         check(preferences.edit().putBoolean("seeded_v1",true).commit()) { "Failed to save initialization status" }
@@ -218,9 +220,10 @@ class PlannerRepository(private val database: PlannerDatabase) {
             }
         }
         database.withTransaction {
+            val priorTasks = dao.allTasks().associateBy { it.id }
             for (task in tasks) {
                 if (task.title.isEmpty()) {
-                    val old = dao.allTasks().firstOrNull { it.id == task.id }
+                    val old = priorTasks[task.id]
                     if (old != null) dao.upsertTask(old.copy(state="COMPLETED"))
                 } else dao.upsertTask(task)
             }
