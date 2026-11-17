@@ -1,6 +1,8 @@
 package app.mplanner
 
 import android.os.Bundle
+import android.os.Build
+import android.Manifest
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -52,6 +54,23 @@ private fun PlannerApp(model: PlannerViewModel) {
     val revisions by model.revisions.collectAsState()
     val mocks by model.mocks.collectAsState()
     val context = LocalContext.current
+    var remindersEnabled by remember { mutableStateOf(RevisionNotifications.isEnabled(context)) }
+    val permissionLauncher = rememberLauncherForActivityResult(
+        ActivityResultContracts.RequestPermission()
+    ) { granted ->
+        if (granted) { RevisionNotifications.enable(context); remindersEnabled = true }
+    }
+    val toggleReminders = {
+        if (remindersEnabled) {
+            RevisionNotifications.disable(context)
+            remindersEnabled = false
+        } else if(Build.VERSION.SDK_INT>=33) {
+            permissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+        } else {
+            RevisionNotifications.enable(context)
+            remindersEnabled = true
+        }
+    }
     val exportLauncher = rememberLauncherForActivityResult(
         ActivityResultContracts.CreateDocument("application/json")
     ) { uri ->
@@ -70,7 +89,7 @@ private fun PlannerApp(model: PlannerViewModel) {
             context.contentResolver.openInputStream(uri)?.bufferedReader()?.use { reader ->
                 reader.readText().also { require(it.length <= 2_000_000) }
             } ?: error("Unable to read file")
-        }.onSuccess(model::importBackup)
+        }.onSuccess { model.importBackup(it) }
     }
     LaunchedEffect(model.exportContent) {
         if (model.exportContent != null) exportLauncher.launch("mplanner-backup-${LocalDate.now()}.json")
@@ -99,7 +118,10 @@ private fun PlannerApp(model: PlannerViewModel) {
         topBar = {
             TopAppBar(
                 title = { Text("mPlanner · ${tab.title}") },
-                actions = { TextButton(onClick = { settings = true }) { Text("Backup") } }
+                actions = {
+                    TextButton(onClick = toggleReminders) { Text(if(remindersEnabled) "Alerts on" else "Alerts off") }
+                    TextButton(onClick = { settings = true }) { Text("Backup") }
+                }
             )
         },
         bottomBar = {
@@ -120,11 +142,11 @@ private fun PlannerApp(model: PlannerViewModel) {
     ) { padding ->
         Column(Modifier.fillMaxSize().padding(padding).padding(horizontal = 12.dp)) {
             when (tab) {
-                Tab.TODAY -> TodayScreen(date,tasks,exams,{ date=it },model::toggleTask,model::addTask,model::updateTask)
+                Tab.TODAY -> TodayScreen(date,tasks,exams,{ date=it },{ model.toggleTask(it) },{ day,title,subject -> model.addTask(day,title,subject) },{ model.updateTask(it) })
                 Tab.PLAN -> PlanScreen(date,tasks,exams,{ date=it;tab=Tab.TODAY })
-                Tab.REVISE -> RevisionScreen(revisions,model::review)
+                Tab.REVISE -> RevisionScreen(revisions,{ event,rating -> model.review(event,rating) })
                 Tab.FOCUS -> FocusScreen(model)
-                Tab.INSIGHTS -> InsightsScreen(tasks,sessions,mocks,model::addMock)
+                Tab.INSIGHTS -> InsightsScreen(tasks,sessions,mocks,{ subject,score,maximum -> model.addMock(subject,score,maximum) })
             }
         }
     }
@@ -186,7 +208,7 @@ private fun TodayScreen(
                     }
                 }
             }
-            item { Text("Your planned study tasks remain visible; move or postpone them if needed.") }
+            item { Text("Your original tasks are preserved. Edit their dates or move them to tomorrow to avoid conflicts.") }
         }
         items(dayTasks,key={it.id}) { task ->
             ElevatedCard(Modifier.fillMaxWidth()) {
@@ -195,6 +217,9 @@ private fun TodayScreen(
                     Column(Modifier.weight(1f)) {
                         Text(task.title)
                         Text(task.subject ?: "General",style=MaterialTheme.typography.labelSmall)
+                    }
+                    if(dayExams.isNotEmpty() && task.state!="COMPLETED") {
+                        TextButton(onClick={onUpdate(task.copy(date=date.plusDays(1).toString()))}) { Text("Tomorrow") }
                     }
                     TextButton(onClick={ editing=task;editTitle=task.title;editDate=task.date }) { Text("Edit") }
                 }
