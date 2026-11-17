@@ -59,7 +59,7 @@ private fun PlannerApp(model: PlannerViewModel) {
     ) { padding ->
         Column(Modifier.fillMaxSize().padding(padding).padding(horizontal = 16.dp)) {
             when (tab) {
-                Tab.TODAY -> TodayScreen(selectedDate, tasks, exams, onDate = { selectedDate = it }, onToggle = model::toggleTask, onAdd = model::addTask)
+                Tab.TODAY -> TodayScreen(selectedDate, tasks, exams, onDate = { selectedDate = it }, onToggle = { model.toggleTask(it) }, onAdd = { date, title -> model.addTask(date, title) })
                 Tab.PLAN -> PlanScreen(tasks, exams, onDate = { selectedDate = it; tab = Tab.TODAY })
                 Tab.REVISE -> PlaceholderScreen("Adaptive revision queue will be integrated after the legacy data importer.")
                 Tab.FOCUS -> PlaceholderScreen("Reliable persisted focus sessions will be added in the timer milestone.")
