@@ -98,7 +98,7 @@ interface PlannerDao {
     @Query("DELETE FROM revision_events WHERE taskId = :taskId AND completed = 0")
     suspend fun removePendingReviews(taskId: String)
     @Query("SELECT COUNT(*) FROM revision_events WHERE taskId = :taskId")
-    suspend fun reviewCount(taskId: String)
+    suspend fun reviewCount(taskId: String): Int
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun upsertMock(mock: MockEntity)
     @Insert(onConflict = OnConflictStrategy.IGNORE)
