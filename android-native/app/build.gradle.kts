@@ -1,8 +1,14 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("org.jetbrains.kotlin.plugin.compose")
     id("com.google.devtools.ksp")
+}
+
+kotlin {
+    compilerOptions { jvmTarget.set(JvmTarget.JVM_17) }
 }
 
 android {
@@ -24,7 +30,6 @@ android {
         targetCompatibility = JavaVersion.VERSION_17
         isCoreLibraryDesugaringEnabled = true
     }
-    kotlinOptions { jvmTarget = "17" }
     sourceSets.getByName("main").java.srcDir("../domain/src/main/kotlin")
     sourceSets.getByName("test").java.srcDir("../domain/src/test/kotlin")
     testOptions { unitTests.isReturnDefaultValues = true }
