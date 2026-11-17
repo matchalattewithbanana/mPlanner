@@ -143,7 +143,7 @@ private fun PlannerApp(model: PlannerViewModel) {
         Column(Modifier.fillMaxSize().padding(padding).padding(horizontal = 12.dp)) {
             when (tab) {
                 Tab.TODAY -> TodayScreen(date,tasks,exams,{ date=it },{ model.toggleTask(it) },{ day,title,subject -> model.addTask(day,title,subject) },{ model.updateTask(it) })
-                Tab.PLAN -> PlanScreen(date,tasks,exams,{ date=it;tab=Tab.TODAY })
+                Tab.PLAN -> PlanScreen(date,tasks,exams,{ date=it;tab=Tab.TODAY }, { d,s -> model.addExam(d,s) })
                 Tab.REVISE -> RevisionScreen(revisions,{ event,rating -> model.review(event,rating) })
                 Tab.FOCUS -> FocusScreen(model)
                 Tab.INSIGHTS -> InsightsScreen(tasks,sessions,mocks,{ subject,score,maximum -> model.addMock(subject,score,maximum) })
@@ -235,11 +235,30 @@ private fun TodayScreen(
 
 @Composable
 private fun PlanScreen(
-    date:LocalDate,tasks:List<TaskEntity>,exams:List<ExamEntity>,onDate:(LocalDate)->Unit
+    date:LocalDate,tasks:List<TaskEntity>,exams:List<ExamEntity>,
+    onDate:(LocalDate)->Unit,onAddExam:(LocalDate,String)->Unit
 ) {
     var filter by remember { mutableStateOf("Upcoming") }
     val today=LocalDate.now()
+    var showNewExam by remember { mutableStateOf(false) }
+    var examDate by remember { mutableStateOf(date.toString()) }
+    var examSubject by remember { mutableStateOf("") }
+    if(showNewExam) {
+        AlertDialog(onDismissRequest={showNewExam=false},
+            title={Text("Add examination")},
+            text={Column {
+                OutlinedTextField(value=examSubject,onValueChange={examSubject=it.take(100)},label={Text("Subject or exam name")})
+                OutlinedTextField(value=examDate,onValueChange={examDate=it.take(10)},label={Text("Date YYYY-MM-DD")})
+            }},
+            confirmButton={TextButton(onClick={
+                runCatching { LocalDate.parse(examDate) }.onSuccess { d ->
+                    if(examSubject.isNotBlank()){onAddExam(d,examSubject);showNewExam=false}
+                }
+            }){Text("Save")}},
+            dismissButton={TextButton(onClick={showNewExam=false}){Text("Cancel")}})
+    }
     Column {
+        Button(onClick={showNewExam=true}) { Text("Add exam") }
         Row {
             FilterChip(selected=filter=="Upcoming",onClick={filter="Upcoming"},label={Text("Upcoming")})
             Spacer(Modifier.width(8.dp))

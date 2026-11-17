@@ -39,6 +39,12 @@ class PlannerRepository(private val database: PlannerDatabase) {
         check(preferences.edit().putBoolean("seeded_v1",true).commit()) { "Failed to save initialization status" }
     }
 
+    suspend fun addExam(date: LocalDate, subject: String, title: String = "Personal exam") {
+        val name = subject.trim().uppercase().take(100)
+        require(name.isNotBlank())
+        dao.upsertExam(ExamEntity(UUID.randomUUID().toString(), date.toString(), name, "PERSONAL", "USER_DEFINED", null, null, null))
+    }
+
     suspend fun addTask(date: LocalDate, title: String, subject: String? = null) {
         val trimmed = title.trim()
         require(trimmed.isNotBlank() && trimmed.length <= 300)

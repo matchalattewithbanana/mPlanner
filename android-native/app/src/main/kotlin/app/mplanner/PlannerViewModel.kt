@@ -31,6 +31,9 @@ class PlannerViewModel(application: Application) : AndroidViewModel(application)
     }
 
     fun clearMessage() { message = null }
+    fun addExam(date: LocalDate, subject: String) = execute {
+        repository.addExam(date, subject)
+    }
     fun addTask(date: LocalDate, title: String, subject: String? = null) = execute {
         repository.addTask(date, title, subject)
     }
