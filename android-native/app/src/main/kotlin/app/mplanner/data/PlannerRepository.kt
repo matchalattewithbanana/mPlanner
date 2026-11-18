@@ -135,6 +135,11 @@ class PlannerRepository(private val database: PlannerDatabase) {
         val mocks = mutableListOf<MockEntity>()
         val exams = mutableListOf<ExamEntity>()
         val native = root.optInt("schemaVersion", 0) == 2 && root.optString("app") == "mPlanner"
+        require(native || (!root.has("schemaVersion") &&
+            (root.has("done") || root.has("rv") || root.has("focus") || root.has("mocks") ||
+             root.keys().asSequence().any { key ->
+                 Regex("""^\d{4}-\d{1,2}-\d{1,2}\|[abnc]$""").matches(key)
+             }))) { "Unsupported backup format; no data imported" }
         if (native) {
             fun objects(key: String, max: Int): List<JSONObject> {
                 val a = root.optJSONArray(key) ?: JSONArray()
