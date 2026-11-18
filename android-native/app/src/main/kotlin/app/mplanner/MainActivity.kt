@@ -321,10 +321,15 @@ private fun FocusScreen(model: PlannerViewModel) {
         while(true) { delay(1000);tick++ }
     }
     val remaining=tracker.remainingSeconds()
-    LaunchedEffect(tick) {
-        if (tracker.isRunning() && remaining==0L) {
-            tracker.finish()?.let { model.recordSession(it.id,it.date,it.seconds,it.subject) }
+    val savePending: (CompletedFocus) -> Unit = { session ->
+        model.recordSession(session.id, session.date, session.seconds, session.subject) {
+            tracker.acknowledge(session.id)
+            tick++
         }
+    }
+    LaunchedEffect(tick) {
+        tracker.pending()?.let(savePending)
+            ?: run { if (tracker.isRunning() && remaining == 0L) tracker.finish()?.let(savePending) }
     }
     Column(Modifier.fillMaxSize(),horizontalAlignment=Alignment.CenterHorizontally,verticalArrangement=Arrangement.spacedBy(18.dp)) {
         Spacer(Modifier.height(20.dp))
@@ -343,10 +348,10 @@ private fun FocusScreen(model: PlannerViewModel) {
                 tick++
             }) { Text(if(tracker.isRunning()) "Pause" else "Start") }
             OutlinedButton(onClick={
-                tracker.finish()?.let { model.recordSession(it.id,it.date,it.seconds,it.subject) }
+                tracker.finish()?.let(savePending)
                 tick++
             }) { Text("Save time") }
-            TextButton(onClick={tracker.clear();tick++}) { Text("Discard") }
+            TextButton(onClick={tracker.discard();tick++}) { Text("Discard") }
         }
         Text("Study duration is saved even when you pause early. The running timer uses Android's monotonic clock.")
     }
