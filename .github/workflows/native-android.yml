@@ -1,7 +1,7 @@
 name: Native Android validation
 on:
   push:
-    branches: [main, feat/kotlin-migration-exam-replan]
+    branches: [main, feat/kotlin-migration-exam-replan, feat/native-reliability-finalization]
     paths:
       - 'android-native/**'
       - '.github/workflows/native-android.yml'
