@@ -41,8 +41,9 @@ class PlannerViewModel(application: Application) : AndroidViewModel(application)
     fun removeTask(task: TaskEntity) = execute { repository.removeTask(task.id) }
     fun toggleTask(task: TaskEntity) = execute { repository.setTaskDone(task, task.state != "COMPLETED") }
     fun review(event: RevisionEntity, rating: Int) = execute { repository.review(event, rating) }
-    fun recordSession(id: String, date: LocalDate, seconds: Long, subject: String?) = execute {
+    fun recordSession(id: String, date: LocalDate, seconds: Long, subject: String?, onSaved: () -> Unit = {}) = execute {
         repository.recordSession(id,date,seconds,subject)
+        onSaved()
     }
     fun addMock(subject: String, score: Double, maximum: Double) = execute {
         repository.addMock(subject,score,maximum)
