@@ -20,6 +20,7 @@ class FocusTracker(context: Context) {
 
     fun setDuration(minutes: Int) {
         require(minutes in 1..180)
+        require(pending() == null) { "Save pending focus session first" }
         clear()
         preferences.edit().putLong("duration", minutes * 60L).apply()
     }
@@ -42,6 +43,7 @@ class FocusTracker(context: Context) {
     }
 
     fun start() {
+        if (pending() != null) return
         if (isRunning()) return
         preferences.edit()
             .putBoolean("running", true)
@@ -56,7 +58,25 @@ class FocusTracker(context: Context) {
     fun clear() {
         preferences.edit().putBoolean("running",false).putLong("accumulated",0).apply()
     }
+    fun pending(): CompletedFocus? {
+        val seconds = preferences.getLong("pendingSeconds", 0L)
+        val id = preferences.getString("sessionId", null) ?: return null
+        val date = preferences.getString("sessionDate", null)?.let(LocalDate::parse) ?: return null
+        return if (seconds > 0L) CompletedFocus(id, date, seconds, preferences.getString("pendingSubject", null)) else null
+    }
+    fun acknowledge(id: String) {
+        if (preferences.getString("sessionId", null) == id) {
+            preferences.edit().remove("sessionId").remove("sessionDate")
+                .remove("pendingSeconds").remove("pendingSubject").apply()
+        }
+    }
+    fun discard() {
+        clear()
+        preferences.edit().remove("sessionId").remove("sessionDate")
+            .remove("pendingSeconds").remove("pendingSubject").apply()
+    }
     fun finish(): CompletedFocus? {
+        pending()?.let { return it }
         val seconds = elapsedSeconds()
         if (seconds <= 0) { clear(); return null }
         val id = preferences.getString("sessionId",null) ?: UUID.randomUUID().toString()
@@ -64,8 +84,11 @@ class FocusTracker(context: Context) {
         val selectedSubject = subject
         // Reuse the id after process death, so Room's INSERT IGNORE avoids duplicates.
         preferences.edit().putString("sessionId",id).putString("sessionDate",date.toString()).apply()
-        clear()
-        preferences.edit().remove("sessionId").remove("sessionDate").apply()
+        check(preferences.edit().putString("sessionId", id).putString("sessionDate", date.toString())
+            .putLong("pendingSeconds", seconds).putString("pendingSubject", selectedSubject)
+            .putBoolean("running", false).putLong("accumulated", 0L).commit()) {
+            "Unable to persist focus session before saving"
+        }
         return CompletedFocus(id, date, seconds, selectedSubject)
     }
     fun remainingSeconds():Long = (durationSeconds-elapsedSeconds()).coerceAtLeast(0)
